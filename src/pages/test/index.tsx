@@ -9,22 +9,41 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import SelectLabels from "@/individual_features/select";
 import BasicDatePicker from "@/individual_features/calender";
 import ResetButton from "@/individual_features/reset";
+import { ChangeEvent, useCallback, useState } from "react";
+import { SelectChangeEvent } from "@mui/material";
 
 const inter = Inter({ subsets: ["latin"] });
 
-export default function filter_func() {
+export default function TestPage() {
+  const [inputValues, setInputValues] = useState<{
+    date: string | undefined;
+    occupation: string | undefined;
+  }>({
+    date: undefined,
+    occupation: undefined,
+  });
+  const onChangeDate = useCallback((v: Date | null) => {
+    const formattedTimestamp = dayjs(v).format("YYYY-MM-DD HH:mm:ss");
+    setInputValues((prev) => ({ ...prev, date: formattedTimestamp }));
+  }, []);
+  const onChangeOccupation = useCallback((e: SelectChangeEvent<string>) => {
+    setInputValues((prev) => ({ ...prev, occupation: e.target.value }));
+  }, []);
+
+  const onResetInputValue = useCallback(() => {
+    setInputValues({
+      date: undefined,
+      occupation: undefined,
+    });
+  }, []);
   return (
     <div>
-      <BasicDatePicker/>
-      {/* <LocalizationProvider dateAdapter={AdapterDayjs}>
-        <DatePicker
-          label="入力日"
-          // defaultValue={dayjs("yyyy-mm-dd")}
-          format="YYYY/MM/DD"
-        />
-      </LocalizationProvider> */}
-      <SelectLabels/>
-      <ResetButton/>
+      <BasicDatePicker onChange={onChangeDate} value={inputValues.date} />
+      <SelectLabels
+        value={inputValues.occupation}
+        onChange={onChangeOccupation}
+      />
+      <ResetButton onReset={onResetInputValue} />
     </div>
   );
 }

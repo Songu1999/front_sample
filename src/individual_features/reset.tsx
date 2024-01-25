@@ -1,17 +1,15 @@
-import * as React from 'react';
-import {Stack,Button} from '@mui/material';
-import resetCalendar from './calender';
+import * as React from "react";
+import { Stack, Button } from "@mui/material";
 
-export default function ResetButton() {
-
-  const reset = () =>{
-    resetCalendar();
-  }
-    return (
-      <Stack spacing={2} direction="row">
-        <Button variant="contained"
-        onClick = {reset}>
-            reset all</Button>
-      </Stack>
-    );
-  }
+type Props = {
+  onReset: () => void;
+};
+export default function ResetButton({ onReset }: Props) {
+  return (
+    <Stack spacing={2} direction="row">
+      <Button variant="contained" onClick={onReset}>
+        reset all
+      </Button>
+    </Stack>
+  );
+}
