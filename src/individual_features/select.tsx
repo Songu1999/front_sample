@@ -1,23 +1,17 @@
-import * as React from 'react';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormHelperText from '@mui/material/FormHelperText';
-import FormControl from '@mui/material/FormControl';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
-import { initialize } from 'next/dist/server/lib/render-server';
+import * as React from "react";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormHelperText from "@mui/material/FormHelperText";
+import FormControl from "@mui/material/FormControl";
+import Select, { SelectChangeEvent } from "@mui/material/Select";
+import { initialize } from "next/dist/server/lib/render-server";
 
-export default function SelectLabels() {
-  const [occupation, setOccupation] = React.useState('');
+type Props = {
+  value?: string;
+  onChange?: (event: SelectChangeEvent<string>) => void;
+};
 
-  let selectedOccupation : string;
-  const handleChange = (event: SelectChangeEvent) => {
-    console.log("プルダウン内の選択肢が変更されました。");
-    console.log(event.target.value);
-    setOccupation(event.target.value);
-    selectedOccupation = event.target.value;
-  };
-  
-
+export default function SelectLabels({ value, onChange }: Props) {
   return (
     <div>
       <FormControl sx={{ m: 1, minWidth: 120 }}>
@@ -25,9 +19,9 @@ export default function SelectLabels() {
         <Select
           labelId="test-label"
           id="test-select"
-          value={occupation}
+          value={value ?? ""}
           label="Occupation"
-          onChange={handleChange}
+          onChange={onChange}
         >
           <MenuItem value="">
             <em>None</em>
